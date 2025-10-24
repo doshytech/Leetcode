@@ -34,7 +34,6 @@ public:
         }
         vector<int> ans(n);
         while(stk.size()){
-            // ans.push_back(stk.top()[0]);
             int i = stk.top()[0];
             ans[mp[i]]=stk.top()[1];
             stk.pop();
