@@ -1,4 +1,4 @@
-map<int,long long> mp;
+unordered_map<int,long long> mp;
 int n;
 class Bank {
 public:
