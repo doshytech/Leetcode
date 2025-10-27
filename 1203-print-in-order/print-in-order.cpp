@@ -1,41 +1,34 @@
+#include <latch>
+
 class Foo {
 public:
-    int ct;
-    mutex m;
-    condition_variable cv;
     Foo() {
-        ct = 0;
+        
     }
 
     void first(function<void()> printFirst) {
         
         // printFirst() outputs "first". Do not change or remove this line.
         printFirst();
-        ct = 1;
-        cv.notify_all();
+        a_done.count_down();
     }
 
     void second(function<void()> printSecond) {
         
         // printSecond() outputs "second". Do not change or remove this line.
-        unique_lock<mutex> lock(m);
-        while(ct!=1){
-            cv.wait(lock);
-        }
+        a_done.wait();
         printSecond();
-        ct = 2;
-        cv.notify_all();
+        b_done.count_down();
     }
 
     void third(function<void()> printThird) {
         
-        // printThird() outputs "third". Do not change or remove t
-         unique_lock<mutex> lock(m);
-        while(ct!=2){
-            cv.wait(lock);
-        }
+        // printThird() outputs "third". Do not change or remove this line.
+        b_done.wait();
         printThird();
-        ct = 3;
-        cv.notify_all();
     }
+
+private:
+    std::latch a_done{1};
+    std::latch b_done{1};
 };
