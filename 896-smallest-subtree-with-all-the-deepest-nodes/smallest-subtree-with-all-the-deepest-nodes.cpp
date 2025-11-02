@@ -37,7 +37,6 @@ public:
             }
         }
         if(v.back().size()==1)return v.back()[0];
-        // int mx = INT_MAX;
         TreeNode* ans = v.back()[0];
         for(int i=0;i<v.back().size()-1;i++){
             for(int j=i+1;j<v.back().size();j++){
