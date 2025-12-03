@@ -6,25 +6,22 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
 class Solution {
 public:
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
-        vector<ListNode*> a, b;
-        ListNode* curr = headA;
-        while(curr!=NULL){
-            a.push_back(curr);
-            curr = curr->next;
+        if (!headA || !headB) return nullptr;
+
+        ListNode *pA = headA;
+        ListNode *pB = headB;
+
+        // Traverse both lists, switching heads when reaching the end
+        while (pA != pB) {
+            pA = (pA) ? pA->next : headB;
+            pB = (pB) ? pB->next : headA;
         }
-        curr = headB;
-        while(curr!=NULL){
-            b.push_back(curr);
-            curr = curr->next;
-        }
-        reverse(a.begin(),a.end()), reverse(b.begin(),b.end());
-        ListNode* val = NULL;
-        for(int i=0;i<min(a.size(),b.size());i++){
-            if(a[i]==b[i])val = a[i];
-        }
-        return val;
+
+        // Either intersection node or nullptr if no intersection
+        return pA;
     }
 };
