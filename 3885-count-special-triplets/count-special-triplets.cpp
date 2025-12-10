@@ -3,7 +3,7 @@ public:
     int specialTriplets(vector<int>& nums) {
         long long sm = 0;
         int mod = 1e9+7;
-        map<int,int> pre, post;
+        unordered_map<int,int> pre, post;
         for(auto &x: nums)post[x]++;
         for(auto &x: nums){
             post[x]--;
