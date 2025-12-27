@@ -1,19 +1,23 @@
 class Solution {
 public:
-    set<string> st;
-    map<string,int> dp[301];
     bool wordBreak(string s, vector<string>& wordDict) {
-        for(auto &x: wordDict)st.insert(x);
-        return f(0,s,"");
-    }
-    int f(int i,string &s, string curr){
-        if(i==s.size())return !curr.size();
-        if(dp[i].find(curr)!=dp[i].end())return dp[i][curr];
-        curr.push_back(s[i]);
-        bool ans = f(i+1,s,curr);
-        if(st.find(curr)!=st.end()){
-            ans|=f(i+1,s,"");
+
+        int n = s.length();
+        unordered_set<string> words(wordDict.begin(), wordDict.end());
+        vector<int> dp(n+1, false);
+        dp[n] = true;
+
+        for(int start = n; start >= 0; start--) {
+            string temp;
+            for(int i=start; i<n; i++) {
+                temp.push_back(s[i]);
+                if(words.count(temp) && dp[i + 1]) {
+                    dp[start] = true;
+                    break;
+                }
+            }
         }
-        return dp[i][curr]=ans;
+
+        return dp[0];
     }
 };
