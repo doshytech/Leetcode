@@ -1,7 +1,7 @@
 class Solution {
 public:
     int n, m;
-    int dp[1001][1001];
+    vector<vector<int>> dp;
     int longestCommonSubsequence(string a, string b) {
         n = a.size(), m = b.size();
         // vector<int> p(m+1,0), c(m+1,0);
@@ -17,7 +17,8 @@ public:
         //     p = c;
         // }
         // return p[m];
-        memset(dp,-1,sizeof(dp));
+        // memset(dp,-1,sizeof(dp));
+        dp.resize(n, vector<int> (m,-1));
         return f(0,0,a,b);
     }
     int f(int i, int j, string &a, string &b){
