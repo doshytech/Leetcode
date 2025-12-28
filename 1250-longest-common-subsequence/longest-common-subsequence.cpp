@@ -18,17 +18,22 @@ public:
         //     p = c;
         // }
         // return p[m];
-        memset(dp,0,sizeof(dp));
+        // memset(dp,0,sizeof(dp));
         // dp.resize(n+1, vector<int> (m+1,0));
+        vector<int> p(m+1,0), c(m+1,0);
         for(int i=n-1;i>-1;i--){
             for(int j=m-1;j>-1;j--){
-                int not_take = max(dp[i+1][j],dp[i][j+1]);
+                int not_take = max(p[j],c[j+1]);
                 int take = 0;
-                if(a[i]==b[j])take = 1+dp[i+1][j+1];
-                dp[i][j]=max(take, not_take);
+                if(a[i]==b[j])take = 1+p[j+1];
+                c[j]=max(take, not_take);
             }
+            p = c;
         }    
-        return dp[0][0];
+        // for(auto &x: p)cout<<x<<" ";
+        // cout<<endl;
+        // for(auto &x: c)cout<<x<<" ";
+        return p[0];
     }
     // int f(int i, int j, string &a, string &b){
     //     if(i==n||j==m)return 0;
